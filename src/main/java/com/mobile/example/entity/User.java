@@ -8,10 +8,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 
-@Entity
+@Entity(name = "users")
 public class User {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -22,7 +25,12 @@ public class User {
 	private String salary;
 	private String reference;
 	
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_ROLES",joinColumns = {
+            @JoinColumn(name = "USER_ID")
+            },
+            inverseJoinColumns = {
+            @JoinColumn(name = "ROLE_ID") })
     private Set<Role> roles;
     
     
@@ -75,6 +83,7 @@ public class User {
 	public void setSalary(String salary) {
 		this.salary = salary;
 	}
+	
 	
 	
 }

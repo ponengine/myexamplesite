@@ -2,11 +2,12 @@ package com.mobile.example.service;
 
 import com.mobile.example.dto.UserDTO;
 import com.mobile.example.entity.User;
+import com.mobile.example.response.BaseResponse;
 
 public interface UserService {
 
-	User findUser(String username);
+	BaseResponse<Object> findUser(String username);
 
-	User saveUser(UserDTO user);
+	BaseResponse<Object> saveUser(UserDTO user);
 
 }
