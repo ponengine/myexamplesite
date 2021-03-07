@@ -24,6 +24,9 @@ public class User {
 	private String address;
 	private String salary;
 	private String reference;
+	private String taxId;
+	
+	
 	
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLES",joinColumns = {
@@ -34,7 +37,14 @@ public class User {
     private Set<Role> roles;
     
     
+    
 	
+	public String getTaxId() {
+		return taxId;
+	}
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
 	public Set<Role> getRoles() {
 		return roles;
 	}

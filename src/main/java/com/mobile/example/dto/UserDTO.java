@@ -10,7 +10,16 @@ public class UserDTO {
 	private String salary;
 	private String phone;
 	private String address;
+	private String taxId;
 	
+	
+	
+	public String getTaxId() {
+		return taxId;
+	}
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -49,6 +58,7 @@ public class UserDTO {
         user.setPhone(phone);
         user.setSalary(salary);
         user.setAddress(address);
+        user.setTaxId(taxId);
         return user;
     }
     
@@ -57,6 +67,7 @@ public class UserDTO {
     	StringBuilder res = new StringBuilder();
     	boolean resultSalary = false;
     	boolean resultPhone = false;
+    	boolean resultTaxId = false;
     	try {
     		Integer.parseInt(salary);
     	}catch(Exception e) {
@@ -66,6 +77,11 @@ public class UserDTO {
     		Integer.parseInt(phone);
     	}catch(Exception e) {
     		resultPhone=true;
+    	}
+    	try {
+    		Integer.parseInt(taxId);
+    	}catch(Exception e) {
+    		resultTaxId=true;
     	}
     	if(!StringUtils.isEmpty(userName)&&userName.indexOf("@")==-1) {
     		res.append("Format username not correct");
@@ -88,6 +104,12 @@ public class UserDTO {
     		}
     		res.append("Format phone not correct");
     	}
+    	if(!StringUtils.isEmpty(taxId)&&(resultTaxId||taxId.length()!=13)) {
+    		if(res.length()!=0) {
+    			res.append(",");
+    		}
+    		res.append("Format taxid not correct");
+    	}
     	
     	return res.toString();
 
@@ -101,13 +123,14 @@ public class UserDTO {
     	return result;
     }
     
-	public UserDTO(String userName, String password, String salary, String phone, String address) {
+	public UserDTO(String userName, String password, String salary, String phone, String address,String taxId) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.salary = salary;
 		this.phone = phone;
 		this.address = address;
+		this.taxId = taxId;
 	}
     
     

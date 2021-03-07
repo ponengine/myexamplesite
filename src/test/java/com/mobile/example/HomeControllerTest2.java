@@ -14,6 +14,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -73,7 +74,7 @@ public class HomeControllerTest2 {
     @Test
     @DisplayName("Integration Register")
     void registerTest() throws Exception {
-    	UserDTO user=new UserDTO("pon2@mail.com", "", "15000", "0943219114", "test 1");
+    	UserDTO user=new UserDTO("pon2@mail.com", "", "15000", "0943219114", "test 1","1100300101010");
     	HttpHeaders headers = new HttpHeaders();
     	headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
     	
@@ -85,5 +86,19 @@ public class HomeControllerTest2 {
         BaseResponse<Object> baseRes = mapper.readValue(response.getBody(), BaseResponse.class);
         System.out.println(">>>>>>>>>>>>>>>>>> "+this.mapper.writeValueAsString(response.getBody()));
         assertEquals("00", baseRes.getStatusCode());
+    }
+    
+    @Test
+    @DisplayName("Integration RoleTest")
+    void roleTest() throws Exception {
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+    	headers.set("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwb25AbWFpbC5jb20iLCJyb2xlcyI6IlJPTEVfU0lMVkVSIiwiaWF0IjoxNjE1MTI2NTUwLCJleHAiOjE2MTUxNDQ1NTB9.XUfCFNPA2uPJ288Jxam2hR4Cs-_4ZaYR6NRZSv4J5ac");
+    	
+    	HttpEntity<String> entity = new HttpEntity<>("", headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(new URL("http://localhost:" + port + "/api/mobile/silver").toString(), HttpMethod.GET, entity, String.class);
+        assertEquals("You are type SILVER", response.getBody());
     }
 }

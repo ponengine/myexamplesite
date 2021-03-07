@@ -61,7 +61,7 @@ public class HomeControllerTest {
 	public void post_find_user_200() throws Exception {
 		
 		BaseResponse<Object> response = new BaseResponse<Object>();
-		UserDTO user=new UserDTO("pon@mail.com", "", "15000", "0943219114", "test 1");
+		UserDTO user=new UserDTO("pon@mail.com", "", "15000", "0943219114", "test 1","1100300101010");
 		response.setStatusCode("00");
 		response.setData(user.transferUser());
 		
@@ -103,7 +103,7 @@ public class HomeControllerTest {
 	public void post_register_200() throws Exception {
 		
 		BaseResponse<Object> response = new BaseResponse<Object>();
-		UserDTO user=new UserDTO("pon2@mail.com", "", "15000", "0943219114", "test 1");
+		UserDTO user=new UserDTO("pon2@mail.com", "", "15000", "0943219114", "test 1","1100300101010");
 		response.setStatusCode("00");
 		
 		
