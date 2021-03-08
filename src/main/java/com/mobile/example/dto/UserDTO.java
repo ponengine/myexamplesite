@@ -79,7 +79,7 @@ public class UserDTO {
     		resultPhone=true;
     	}
     	try {
-    		Integer.parseInt(taxId);
+                Long.parseLong(taxId);
     	}catch(Exception e) {
     		resultTaxId=true;
     	}
@@ -104,6 +104,7 @@ public class UserDTO {
     		}
     		res.append("Format phone not correct");
     	}
+
     	if(!StringUtils.isEmpty(taxId)&&(resultTaxId||taxId.length()!=13)) {
     		if(res.length()!=0) {
     			res.append(",");

@@ -34,6 +34,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 	                .antMatchers("/api/mobile/authenticate", "/api/mobile/register", "/api/mobile/test").permitAll()
 	                .anyRequest().authenticated()
 	                .and()
+                        .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                        .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+                        .and()
 	                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 	    }
@@ -42,12 +45,17 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 	    public BCryptPasswordEncoder encoder(){
 	        return new BCryptPasswordEncoder();
 	    }
-	    
+	    @Bean
+            public AccessDeniedHandler accessDeniedHandler(){
+            return new CustomAccessDeniedHandler();
+            }
+            
 	    @Override
 	    @Bean
 	    public AuthenticationManager authenticationManagerBean() throws Exception {
 	        return super.authenticationManagerBean();
 	    }
+
 
 	    @Bean
 	    public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
