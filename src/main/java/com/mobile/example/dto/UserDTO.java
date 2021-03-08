@@ -63,7 +63,6 @@ public class UserDTO {
     }
     
     public String validate() {
-    	String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
     	StringBuilder res = new StringBuilder();
     	boolean resultSalary = false;
     	boolean resultPhone = false;
@@ -85,12 +84,6 @@ public class UserDTO {
     	}
     	if(!StringUtils.isEmpty(userName)&&userName.indexOf("@")==-1) {
     		res.append("Format username not correct");
-    	}
-    	if(!StringUtils.isEmpty(password)&&!pattern.matches(password)) {
-    		if(res.length()!=0) {
-    			res.append(",");
-    		}
-    		res.append("Password not strong");
     	}
     	if(!StringUtils.isEmpty("salary")&&resultSalary) {
     		if(res.length()!=0) {

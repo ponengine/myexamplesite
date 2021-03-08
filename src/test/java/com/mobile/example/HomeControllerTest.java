@@ -2,29 +2,20 @@ package com.mobile.example;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobile.example.config.TokenProvider;
 import com.mobile.example.controller.HomeController;
@@ -33,7 +24,6 @@ import com.mobile.example.dto.UserDTO;
 import com.mobile.example.repository.UserRepository;
 import com.mobile.example.response.BaseResponse;
 import com.mobile.example.service.UserService;
-import com.mobile.example.service.impl.UserServiceImpl;
 import com.mobile.example.util.UserUtil;
 
 @WebMvcTest(HomeController.class)
@@ -70,9 +60,6 @@ public class HomeControllerTest {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/api/mobile/userinfo")
 				.contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8").content(this.mapper.writeValueAsBytes(user.transferUser()));
-		
-		System.out.println(">>>>>>>>>>>>>>>>>> "+this.mapper.writeValueAsString(response));
-		
 		mockMvc.perform(builder).andExpect(status().isOk())
 		.andExpect(MockMvcResultMatchers.content().string(this.mapper.writeValueAsString(response)));
 	}
@@ -90,9 +77,6 @@ public class HomeControllerTest {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/api/mobile/authenticate")
 				.contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8").content(this.mapper.writeValueAsBytes(login));
-
-		System.out.println(">>>>>>>>>>>>>>>>>> "+this.mapper.writeValueAsString(response));
-		
 		mockMvc.perform(builder).andExpect(status().isOk())
 		.andExpect(MockMvcResultMatchers.content().string(this.mapper.writeValueAsString(response)));
 		
@@ -104,17 +88,12 @@ public class HomeControllerTest {
 		
 		BaseResponse<Object> response = new BaseResponse<Object>();
 		UserDTO user=new UserDTO("pon2@mail.com", "", "15000", "0943219114", "test 1","1100300101010");
-		response.setStatusCode("00");
-		
-		
+		response.setStatusCode("00");	
 		Mockito.when(service.saveUser(user)).thenReturn(response);
 		
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/api/mobile/register")
 				.contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8").content(this.mapper.writeValueAsBytes(user));
-		
-		System.out.println(">>>>>>>>>>>>>>>>>> "+this.mapper.writeValueAsString(response));
-		
 		mockMvc.perform(builder).andExpect(status().isOk())
 		.andExpect(MockMvcResultMatchers.content().string(this.mapper.writeValueAsString(response)));
 	}
@@ -123,14 +102,10 @@ public class HomeControllerTest {
 
 	@Test
 	public void post_test() throws Exception {
-		
-		
 		Mockito.when(service.testresdata("Hello world")).thenReturn("Hello world");
-		
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/api/mobile/test")
 				.contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8").content("Hello world");
-
 		mockMvc.perform(builder).andExpect(status().isOk()).andExpect(MockMvcResultMatchers.content().string("Hello world"));
 	}
 	
